@@ -22,18 +22,17 @@ public class TileMapManager : MonoBehaviour
             return instance;
         }
     }
-
+    [Header("Total Map Size")]
     public int width = 0;
     public int height = 0;
-    
-    public float tileSizeX=0;
-    public float tileSizeY=0;
+    [Space]
+    public Vector2 tileSize = new Vector2(1,1);
+    [Space]
+    public Vector2 offset = new Vector2(1, 1);
 
     public List<List<Tile>> tilemap = new List<List<Tile>>();
 
     public Tile tilePrefab;
-    public int offsetX = 0;
-    public int offsetY = 0;
     
     public Tile GetTile(int x,int y)
     {
@@ -48,31 +47,23 @@ public class TileMapManager : MonoBehaviour
         }
     }
 
-    void Initialized()
+    void Initialize()
     {
-        for(int indexX=0;indexX<width;indexX++)
+        float pixelPerUnit = tilePrefab.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        Vector2 imageSize = tilePrefab.GetComponent<SpriteRenderer>().sprite.rect.size;
+        for (int indexX=0;indexX<width;indexX++)
         {
             tilemap.Add(new List<Tile>());
             for (int indexY = 0; indexY < width; indexY++)
             {
-                tilemap[indexX].Add(Instantiate(tilePrefab, new Vector2(indexX * tileSizeX +(offsetX*indexX)  , indexY*tileSizeY + offsetY*indexY), new Quaternion(0,0,0,0),transform));
+                tilemap[indexX].Add(Instantiate(tilePrefab, new Vector2(indexX * (imageSize.x * tileSize.x + offset.x), indexY * (imageSize.y * tileSize.y + offset.y)), new Quaternion(0, 0, 0, 0), transform));
                 tilemap[indexX][indexY].SetCoordinate(indexX, indexY);
-                //타일 정보 초기화.
-                //타일 포지션 초기화 + 오프셋만큼 벌린다.
+                tilemap[indexX][indexY].transform.localScale = tileSize * pixelPerUnit;
             }
         }
     }
-
-
-    // Use this for initialization
     void Start ()
     {
-        Initialized();
+        Initialize();
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
 }

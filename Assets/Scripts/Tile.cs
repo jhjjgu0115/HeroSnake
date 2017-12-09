@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    public void SetCoordinate(int x,int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
+    static List<Sprite> tileSprites=new List<Sprite>();
     SpriteRenderer spriteRenderer;
 
-    public int x=0;
-    public int y=0;
+    [SerializeField]
+    int x=0;
+    [SerializeField]
+    int y = 0;
+    public int X
+    {
+        get
+        {
+            return x;
+        }
+    }
+    public int Y
+    {
+        get
+        {
+            return y;
+        }
+    }
 
-    public EGround groundInfo=EGround.ground;
+    public EGround groundInfo=EGround.Ground;
     List<Item> itemList = new List<Item>();
     public List<Item> ItemList
     {
@@ -27,17 +39,25 @@ public class Tile : MonoBehaviour
 
     void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        tileSprites.AddRange(Resources.LoadAll<Sprite>("Sprites/Grounds"));
     }
     void OnEnable()
     {
     }
     void Start ()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
+    public void SetCoordinate(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+    [ContextMenu("SetGround")]
+    public void SetGroundInfo(EGround groundInfo)
+    {
+        this.groundInfo = groundInfo;
+        spriteRenderer.sprite = tileSprites.Find(i => i.name == groundInfo.ToString());
+    }
+
 }

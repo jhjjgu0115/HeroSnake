@@ -1,7 +1,8 @@
 ﻿public enum EGround
 {
-    ground,
-    wall,
-    water,
-    swamp
+    Ground,
+    Wall,
+    Water,
+    Swamp,
+    Magma
 }
