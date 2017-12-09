@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScript : MonoBehaviour
-{
-
+public class Unit : MonoBehaviour {
+    
 	// Use this for initialization
 	void Start () {
-        Debug.Log("TestMsg");
+		
 	}
 	
 	// Update is called once per frame
