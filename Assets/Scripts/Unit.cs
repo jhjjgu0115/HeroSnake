@@ -14,4 +14,3 @@ public class Unit : MonoBehaviour {
 		
 	}
 }
-///shit
