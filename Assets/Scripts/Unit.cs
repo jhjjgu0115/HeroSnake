@@ -13,5 +13,8 @@ public class Unit : MonoBehaviour {
 	void Update () {
 		
 	}
+    void test()
+    {
+
+    }
 }
-//shit
