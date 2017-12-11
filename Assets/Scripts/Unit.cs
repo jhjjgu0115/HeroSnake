@@ -13,8 +13,9 @@ public class Unit : MonoBehaviour {
 	void Update () {
 		
 	}
-    void test()
-    {
 
+    void HunJaeCode()
+    {
+        Debug.Log("훈재가 씀");
     }
 }
