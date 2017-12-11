@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TileMapManager : MonoBehaviour
-{
+{ 
     static TileMapManager instance;
     public static TileMapManager Instance
     {
@@ -47,8 +47,10 @@ public class TileMapManager : MonoBehaviour
         }
     }
 
-    void Initialize()
+    public void Initialize(int x,int y)
     {
+        width = x;
+        height = y;
         float pixelPerUnit = tilePrefab.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
         Vector2 imageSize = tilePrefab.GetComponent<SpriteRenderer>().sprite.rect.size;
         for (int indexX=0;indexX<width;indexX++)
@@ -64,6 +66,5 @@ public class TileMapManager : MonoBehaviour
     }
     void Start ()
     {
-        Initialize();
     }
 }
