@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : MonoBehaviour {
+public partial class Unit : MonoBehaviour
+{
     
 	// Use this for initialization
 	void Start () {
@@ -15,7 +16,28 @@ public class Unit : MonoBehaviour {
 	}
 
     void HunJaeCode()
-    {
+    { 
         Debug.Log("훈재가 씀");
     }
+}
+public partial class Unit : MonoBehaviour
+{
+}
+public partial class Unit : MonoBehaviour
+{
+}
+public partial class Unit : MonoBehaviour
+{
+}
+public partial class Unit : MonoBehaviour
+{
+}
+public partial class Unit : MonoBehaviour
+{
+}
+public partial class Unit : MonoBehaviour
+{
+}
+public partial class Unit : MonoBehaviour
+{
 }
