@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9c5d58ca59e6b9d4d81f0286c6ce0e8a
-timeCreated: 1513076966
+timeCreated: 1513101940
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -38,6 +38,14 @@ TextureImporter:
     21300062: Button90
     21300064: ButtonClicked90
     21300066: ButtonClicked61
+    21300068: TabButton1
+    21300070: TabButton2
+    21300072: TabButton3
+    21300074: TabButton4
+    21300076: Close1
+    21300078: Close2
+    21300080: Close3
+    21300082: Close4
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -471,7 +479,7 @@ TextureImporter:
         width: 10
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 3, y: 5, z: 5, w: 3}
       outline: []
       tessellationDetail: 0
@@ -484,7 +492,7 @@ TextureImporter:
         width: 9
         height: 11
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -497,7 +505,7 @@ TextureImporter:
         width: 10
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 3, y: 5, z: 5, w: 3}
       outline: []
       tessellationDetail: 0
@@ -510,7 +518,7 @@ TextureImporter:
         width: 10
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 3, y: 5, z: 5, w: 3}
       outline: []
       tessellationDetail: 0
@@ -523,7 +531,7 @@ TextureImporter:
         width: 10
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 3, y: 5, z: 5, w: 3}
       outline: []
       tessellationDetail: 0
@@ -536,7 +544,7 @@ TextureImporter:
         width: 10
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 3, y: 5, z: 5, w: 3}
       outline: []
       tessellationDetail: 0
@@ -549,8 +557,60 @@ TextureImporter:
         width: 10
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 3, y: 5, z: 5, w: 3}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Close1
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 804
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Close2
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 811
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Close3
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 810
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Close4
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 820
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     outline: []
