@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class TestScript : MonoBehaviour
 {
-
-	// Use this for initialization
-	void Start () {
+    private void OnMouseDown()
+    {
+        Debug.Log(1);
+    }
+    // Use this for initialization
+    void Start () {
         Debug.Log("TestMsg");
 	}
 	

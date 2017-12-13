@@ -16,3 +16,10 @@ public enum OrderInDirection
     ForwardDirection,
     BackwardDrection
 }
+public enum ActionSet
+{
+    Up,
+    Left,
+    Down,
+    Right
+}
