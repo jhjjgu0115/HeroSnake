@@ -16,7 +16,7 @@ public enum OrderInDirection
     ForwardDirection,
     BackwardDrection
 }
-public enum ActionSet
+public enum Direction
 {
     Up,
     Left,

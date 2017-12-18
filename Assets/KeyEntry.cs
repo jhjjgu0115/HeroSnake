@@ -10,7 +10,7 @@ public class KeyEntry : MonoBehaviour
     public TextMeshProUGUI actionText;
     public TextMeshProUGUI currentKeyText;
 
-    public void Initialize(ActionSet action,KeyCode key)
+    public void Initialize(Direction action,KeyCode key)
     {
         actionText.text = action.ToString();
         currentKeyText.text = key.ToString();

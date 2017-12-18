@@ -29,19 +29,19 @@ public class KeyBinder : MonoBehaviour
     public KeyEntry keyEntry;
     public GridLayoutGroup gridArea;
 
-    Dictionary<ActionSet, KeyCode> keyDict = new Dictionary<ActionSet, KeyCode>();
+    Dictionary<Direction, KeyCode> keyDict = new Dictionary<Direction, KeyCode>();
     KeyEntry currentKey;
 
     
 
     void Start()
     {
-        foreach (ActionSet key in Enum.GetValues(typeof(ActionSet)))
+        foreach (Direction key in Enum.GetValues(typeof(Direction)))
         {
             keyDict.Add(key, (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key.ToString(),KeyCode.W.ToString())));
         }
 
-        foreach (ActionSet key in Enum.GetValues(typeof(ActionSet)))
+        foreach (Direction key in Enum.GetValues(typeof(Direction)))
         {
             KeyEntry tmp = Instantiate(keyEntry, gridArea.transform);
             tmp.Initialize(key, keyDict[key]);
@@ -51,21 +51,21 @@ public class KeyBinder : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(keyDict[ActionSet.Up]))
+        if (Input.GetKeyDown(keyDict[Direction.Up]))
         {
-            Debug.Log(ActionSet.Up.ToString());
+            Debug.Log(Direction.Up.ToString());
         }
-        if (Input.GetKeyDown(keyDict[ActionSet.Left]))
+        if (Input.GetKeyDown(keyDict[Direction.Left]))
         {
-            Debug.Log(ActionSet.Left.ToString());
+            Debug.Log(Direction.Left.ToString());
         }
-        if (Input.GetKeyDown(keyDict[ActionSet.Down]))
+        if (Input.GetKeyDown(keyDict[Direction.Down]))
         {
-            Debug.Log(ActionSet.Down.ToString());
+            Debug.Log(Direction.Down.ToString());
         }
-        if (Input.GetKeyDown(keyDict[ActionSet.Right]))
+        if (Input.GetKeyDown(keyDict[Direction.Right]))
         {
-            Debug.Log(ActionSet.Right.ToString());
+            Debug.Log(Direction.Right.ToString());
         }
     }
     public KeyCode pressedKey;
@@ -77,7 +77,7 @@ public class KeyBinder : MonoBehaviour
             
             if(e.isKey)
             {
-                keyDict[(ActionSet)Enum.Parse(typeof(ActionSet), currentKey.name)] = e.keyCode;
+                keyDict[(Direction)Enum.Parse(typeof(Direction), currentKey.name)] = e.keyCode;
                 currentKey.currentKeyText.text = e.keyCode.ToString();
                 currentKey = null;
             }
