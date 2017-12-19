@@ -137,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 100
   height: 100
-  splitTime: 2
+  splitTime: 1
 --- !u!4 &756339327
 Transform:
   m_ObjectHideFlags: 0
@@ -160,7 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 918793220}
   - component: {fileID: 918793221}
-  - component: {fileID: 918793222}
+  - component: {fileID: 918793223}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -192,19 +192,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9a43db491af19044ab364e8b5e12fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
---- !u!114 &918793222
-MonoBehaviour:
+  currentCoordinate:
+    x: 0
+    y: 0
+  hp: 10
+  movePoint: 2
+--- !u!212 &918793223
+SpriteRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 918793219}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b640d48a5da5ada4ea49f95890a431bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 21300016, guid: e5f76a5c338da9444afd75ae88b39448, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1.28, y: 1.28}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
 --- !u!1 &985815179
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +361,7 @@ MonoBehaviour:
   width: 10
   height: 10
   tileSize: {x: 0.5, y: 0.5}
-  offset: {x: 0, y: 0}
+  offset: {x: 0.1, y: 0.1}
   tilePrefab: {fileID: 114750977762053520, guid: 14210d739c037be4b9b49809f333f6d0,
     type: 2}
 --- !u!4 &1388053322

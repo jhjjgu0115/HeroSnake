@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 980057794}
   - component: {fileID: 980057795}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: StageManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,10 +145,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 980057793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9a43db491af19044ab364e8b5e12fc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 31ca49f658827544a869a22bc9485f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
 --- !u!1 &1399114841
 GameObject:
   m_ObjectHideFlags: 0

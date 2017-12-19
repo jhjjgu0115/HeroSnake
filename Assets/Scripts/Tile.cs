@@ -27,6 +27,7 @@ public class Tile : MonoBehaviour
     }
 
     public EGround groundInfo=EGround.Ground;
+    public List<GameObject> interactableList = new List<GameObject>();
     List<Item> itemList = new List<Item>();
     public List<Item> ItemList
     {

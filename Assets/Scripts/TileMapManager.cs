@@ -34,16 +34,16 @@ public class TileMapManager : MonoBehaviour
 
     public Tile tilePrefab;
     
-    public Tile GetTile(int x,int y)
+    public Tile GetTile(Coordinate coordinate)
     {
-        if(x>width || y>height)
+        if(coordinate.x> width || coordinate.y> height || coordinate.x <0 || coordinate.y < 0)
         {
-            Debug.Log("타일맵 인덱스 초과 (" + width + "," + height + ")" + " 검색인덱스 (" + x + "," + y + ")");
+            Debug.Log("타일맵 인덱스 초과 (" + width + "," + height + ")" + " 검색인덱스 (" + coordinate.x + "," + coordinate.y + ")");
             return null;
         }
         else
         {
-            return tilemap[x][y];
+            return tilemap[coordinate.x][coordinate.y];
         }
     }
 

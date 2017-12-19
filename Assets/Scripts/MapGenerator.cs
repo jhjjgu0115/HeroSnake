@@ -21,8 +21,7 @@ public class MapGenerator : MonoBehaviour {
         map = map.splitmSpace(space, 2);
         tm = TileMapManager.Instance;
         tm.Initialize(width, height);
-
-        tm.GetTile(1, 2).SetGroundInfo(EGround.Magma);
+        
     }
 	
 	// Update is called once per frame

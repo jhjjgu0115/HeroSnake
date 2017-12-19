@@ -29,6 +29,12 @@ public class KeyBinder : MonoBehaviour
     public KeyEntry keyEntry;
     public GridLayoutGroup gridArea;
 
+    public delegate void KeyEvent(Direction direction);
+    public event KeyEvent Up;
+    public event KeyEvent Left;
+    public event KeyEvent Down;
+    public event KeyEvent Right;
+
     Dictionary<Direction, KeyCode> keyDict = new Dictionary<Direction, KeyCode>();
     KeyEntry currentKey;
 
@@ -40,32 +46,38 @@ public class KeyBinder : MonoBehaviour
         {
             keyDict.Add(key, (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key.ToString(),KeyCode.W.ToString())));
         }
-
-        foreach (Direction key in Enum.GetValues(typeof(Direction)))
+        if(gridArea)
         {
-            KeyEntry tmp = Instantiate(keyEntry, gridArea.transform);
-            tmp.Initialize(key, keyDict[key]);
-            tmp.name = key.ToString();
-
+            foreach (Direction key in Enum.GetValues(typeof(Direction)))
+            {
+                KeyEntry tmp = Instantiate(keyEntry, gridArea.transform);
+                tmp.Initialize(key, keyDict[key]);
+                tmp.name = key.ToString();
+            }
         }
+        
     }
     private void Update()
     {
         if (Input.GetKeyDown(keyDict[Direction.Up]))
         {
-            Debug.Log(Direction.Up.ToString());
+            Debug.Log("Up");
+            Up(Direction.Up);
         }
         if (Input.GetKeyDown(keyDict[Direction.Left]))
         {
-            Debug.Log(Direction.Left.ToString());
+            Debug.Log("Left");
+            Left(Direction.Left);
         }
         if (Input.GetKeyDown(keyDict[Direction.Down]))
         {
-            Debug.Log(Direction.Down.ToString());
+            Debug.Log("Down");
+            Down(Direction.Down);
         }
         if (Input.GetKeyDown(keyDict[Direction.Right]))
         {
-            Debug.Log(Direction.Right.ToString());
+            Debug.Log("Right");
+            Right(Direction.Right);
         }
     }
     public KeyCode pressedKey;
