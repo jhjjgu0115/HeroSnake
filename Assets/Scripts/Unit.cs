@@ -4,13 +4,35 @@ using UnityEngine;
 using System;
 public partial class Unit : MonoBehaviour
 {
+    public int myPartyIndex;
+    public List<Unit> partyList;
+    bool isLeader = false;
+    [Serializable]
+    public struct DamageInfo
+    {
+        public List<Coordinate> area;
+        public int damage;
+        
+        public DamageInfo(int damage)
+        {
+            area = new List<Coordinate>();
+            this.damage = damage;
+        }
+    }
+    public List<DamageInfo> damageInfo = new List<DamageInfo>();
+
+
     [Header("Coordinate")]
     [SerializeField]
     public Coordinate currentCoordinate;
+    public List<Coordinate> traceList = new List<Coordinate>();
+
+
     [SerializeField]
     int hp;
     [SerializeField]
     public int movePoint;
+    Tile currentTile;
     Direction currentDirection;
     Dictionary<Coordinate, int> damageArea = new Dictionary<Coordinate, int>();
 
@@ -23,13 +45,28 @@ public partial class Unit : MonoBehaviour
     public bool MoveToPosition(Coordinate coordinate)
     {
         Tile movePositionTile = TileMapManager.Instance.GetTile(coordinate);
+
         if(movePositionTile)
         {
-            TileMapManager.Instance.GetTile(currentCoordinate).unit = null;
-            transform.position = movePositionTile.transform.position;
-            movePositionTile.unit = this;
-            currentCoordinate = coordinate;
-            return true;
+            if(movePositionTile.unit==null)
+            {
+                if (currentTile)
+                {
+                    currentTile.unit = null;
+                }
+                transform.position = movePositionTile.transform.position;
+                movePositionTile.unit = this;
+                AddTrace(currentCoordinate);
+                currentCoordinate = coordinate;
+                currentTile = movePositionTile;
+                return true;
+            }
+            else
+            {
+                Debug.Log("Can't Move There Position. Aready Unit exist (" + coordinate.x + "," + coordinate.y + ") - move");
+                return false;
+            }
+            
         }
         else
         {
@@ -67,6 +104,7 @@ public partial class Unit : MonoBehaviour
                 if (t.unit == null)
                 {
                     MoveToPosition(nextPosition * point + currentCoordinate);
+                    currentDirection = direction;
                     return true;
                 }
             }
@@ -105,11 +143,43 @@ public partial class Unit : MonoBehaviour
     {
         get
         {
-            return -CurrentDirection;
+            return currentCoordinate-CurrentDirection;
+        }
+    }
+    
+    void AddTrace(Coordinate coordinate)
+    {
+        traceList.Insert(0, coordinate);
+        if(traceList.Count>10)
+        {
+            Debug.Log(name + " " + coordinate + " " + traceList.Count);
+            traceList.RemoveAt(10);
         }
     }
 
+    public void Attack()
+    {
+        foreach(DamageInfo damage in damageInfo)
+        {
+            foreach(Coordinate coord in damage.area)
+            {
+                GiveDamage(coord, damage.damage);
+            }
+        }
+    }
+    Coordinate Rotate(Coordinate coord, float degree)
+    {
+        float sin = Mathf.Sin(degree * Mathf.Deg2Rad);
+        float cos = Mathf.Cos(degree * Mathf.Deg2Rad);
+        
 
+        int tx = coord.x;
+        int ty = coord.y;
+
+        coord.x = (int)Math.Round((cos * tx) - (sin * ty));
+        coord.y = (int)Math.Round((sin * tx) + (cos * ty));
+        return coord;
+    }
     public bool GiveDamage(Coordinate coordinate, int damage)
     {
         Tile attackPositionTile = TileMapManager.Instance.GetTile(coordinate);
@@ -148,6 +218,7 @@ public partial class Unit : MonoBehaviour
 
     void Start ()
     {
+        Debug.Log(Rotate(new Coordinate(-1, 1), -90));
     }
 
     void Update ()
