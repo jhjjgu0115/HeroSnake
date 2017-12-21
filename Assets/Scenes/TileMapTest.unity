@@ -137,7 +137,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 100
   height: 100
-  splitTime: 1
+  splitTime: 2
+  tm: {fileID: 0}
 --- !u!4 &756339327
 Transform:
   m_ObjectHideFlags: 0
@@ -192,9 +193,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9a43db491af19044ab364e8b5e12fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myPartyIndex: 0
+  partyList: []
+  damageInfo: []
   currentCoordinate:
     x: 0
     y: 0
+  traceList: []
   hp: 10
   movePoint: 2
 --- !u!212 &918793223
