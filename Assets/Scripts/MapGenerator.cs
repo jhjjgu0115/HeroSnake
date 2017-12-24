@@ -192,7 +192,7 @@ public class MapGenerator : MonoBehaviour
                 {
                     if (i != 0 && j != 0)
                     {
-                        test = tm.GetTile(new Coordinate(x + i, y + j));
+                        test = TileMapManager.GetTile(new Coordinate(x + i, y + j));
                         test.SetGroundInfo(EGround.Wall);
                     }
                 }
@@ -200,7 +200,7 @@ public class MapGenerator : MonoBehaviour
         }
         else
         {
-            test = tm.GetTile(new Coordinate(x, y));
+            test = TileMapManager.GetTile(new Coordinate(x, y));
             test.SetGroundInfo(EGround.Ground);
         }
 
@@ -216,12 +216,12 @@ public class MapGenerator : MonoBehaviour
             {
                 if (i == 0 || i == target.h || j == 0 || j == target.w)
                 {
-                    test = tm.GetTile(new Coordinate(target.x + j, target.y + i));
+                    test = TileMapManager.GetTile(new Coordinate(target.x + j, target.y + i));
                     test.SetGroundInfo(EGround.Wall);
                 }
                 else
                 {
-                    test = tm.GetTile(new Coordinate(target.x + j, target.y + i));
+                    test = TileMapManager.GetTile(new Coordinate(target.x + j, target.y + i));
                     test.SetGroundInfo(EGround.Ground);
                 }
             }

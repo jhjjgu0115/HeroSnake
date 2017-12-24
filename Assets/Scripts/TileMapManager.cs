@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+ 
 public class TileMapManager : MonoBehaviour
 { 
     static TileMapManager instance;
@@ -23,18 +23,18 @@ public class TileMapManager : MonoBehaviour
         }
     }
     [Header("Total Map Size")]
-    public int width = 0;
-    public int height = 0;
+    public static int width = 0;
+    public static int height = 0;
     [Space]
     public Vector2 tileSize = new Vector2(1,1);
     [Space]
     public Vector2 offset = new Vector2(1, 1);
 
-    public List<List<Tile>> tilemap = new List<List<Tile>>();
+    public static List<List<Tile>> tilemap = new List<List<Tile>>();
 
     public Tile tilePrefab;
     
-    public Tile GetTile(Coordinate coordinate)
+    public static Tile GetTile(Coordinate coordinate)
     {
         if(coordinate.x> width || coordinate.y> height || coordinate.x <0 || coordinate.y < 0)
         {

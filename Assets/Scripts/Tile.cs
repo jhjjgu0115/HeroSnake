@@ -60,5 +60,8 @@ public class Tile : MonoBehaviour
         this.groundInfo = groundInfo;
         spriteRenderer.sprite = tileSprites.Find(i => i.name == groundInfo.ToString());
     }
-
+    public void DebugColorChange(Color32 color)
+    {
+        spriteRenderer.color = color;
+    }
 }

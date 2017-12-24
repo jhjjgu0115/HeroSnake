@@ -4,61 +4,22 @@ using UnityEngine;
 using System;
 public partial class Unit : MonoBehaviour
 {
-    public int myPartyIndex;
-    public List<Unit> partyList;
-    bool isLeader = false;
-    [Serializable]
-    public struct DamageInfo
-    {
-        public List<Coordinate> area;
-        public int damage;
-        
-        public DamageInfo(int damage)
-        {
-            area = new List<Coordinate>();
-            this.damage = damage;
-        }
-    }
-    public List<DamageInfo> damageInfo = new List<DamageInfo>();
-
-
-    [Header("Coordinate")]
     [SerializeField]
-    public Coordinate currentCoordinate;
-    public List<Coordinate> traceList = new List<Coordinate>();
-
-
-    [SerializeField]
-    int hp;
-    [SerializeField]
+    public Coordinate coordinate;
+    public Direction direction;
     public int movePoint;
-    Tile currentTile;
-    Direction currentDirection;
-    Dictionary<Coordinate, int> damageArea = new Dictionary<Coordinate, int>();
-
-    void Initialize()
-    { }
-    public void ReBirth()
-    {
-
-    }
     public bool MoveToPosition(Coordinate coordinate)
     {
-        Tile movePositionTile = TileMapManager.Instance.GetTile(coordinate);
-
-        if(movePositionTile)
+        Tile targetTile = TileMapManager.GetTile(coordinate);
+        
+        if(targetTile!=null)
         {
-            if(movePositionTile.unit==null)
+            if(targetTile.unit==null)
             {
-                if (currentTile)
-                {
-                    currentTile.unit = null;
-                }
-                transform.position = movePositionTile.transform.position;
-                movePositionTile.unit = this;
-                AddTrace(currentCoordinate);
-                currentCoordinate = coordinate;
-                currentTile = movePositionTile;
+                TileMapManager.GetTile(this.coordinate).unit = null;
+                transform.position = targetTile.transform.position;
+                targetTile.unit = this;
+                this.coordinate = coordinate;
                 return true;
             }
             else
@@ -66,128 +27,67 @@ public partial class Unit : MonoBehaviour
                 Debug.Log("Can't Move There Position. Aready Unit exist (" + coordinate.x + "," + coordinate.y + ") - move");
                 return false;
             }
-            
+
         }
         else
         {
             Debug.Log("There is NullTile (" + coordinate.x + "," + coordinate.y + ") - move");
             return false;
         }
-    }
-    public bool MoveToDirection(Direction direction, int _movePoint)
+    }   
+
+    public void Rebirth()
     {
-        Coordinate nextPosition;
-        switch (direction)
-        {
-            case Direction.Up:
-                nextPosition = new Coordinate(0, 1);
-                break;
-            case Direction.Left:
-                nextPosition = new Coordinate(-1, 0);
-                break;
-            case Direction.Down:
-                nextPosition = new Coordinate(0, -1);
-                break;
-            case Direction.Right:
-                nextPosition = new Coordinate(1, 0);
-                break;
-            default:
-                nextPosition = new Coordinate(0, 0);
-                break;
-        }
-        TileMapManager tm = TileMapManager.Instance;
-        for (int point = _movePoint; point > 0; point--)
-        {
-            Tile t = tm.GetTile(nextPosition * point + currentCoordinate);
-            if (t)
-            {
-                if (t.unit == null)
-                {
-                    MoveToPosition(nextPosition * point + currentCoordinate);
-                    currentDirection = direction;
-                    return true;
-                }
-            }
-        }
-        return false;
 
     }
-    public Coordinate CurrentDirection
+    public void Dead()
     {
-        get
-        {
-            Coordinate direction;
-            switch (currentDirection)
-            {
-                case Direction.Up:
-                    direction = new Coordinate(0, 1);
-                    break;
-                case Direction.Left:
-                    direction = new Coordinate(-1, 0);
-                    break;
-                case Direction.Down:
-                    direction = new Coordinate(0, -1);
-                    break;
-                case Direction.Right:
-                    direction = new Coordinate(1, 0);
-                    break;
-                default:
-                    direction = new Coordinate(0, 0);
-                    break;
-            }
-            return direction;
-        }
-        
+        Debug.Log(name + " 쥬금 ");
     }
-    public Coordinate GetBackPosition
+
+    public int hp;
+    public List<AttackInfo> mainAttackInfoList = new List<AttackInfo>();
+    public List<AttackInfo> subAttackInfoList = new List<AttackInfo>();
+    public void MainAttack()
     {
-        get
+        foreach(AttackInfo attackinfo in mainAttackInfoList)
         {
-            return currentCoordinate-CurrentDirection;
+            foreach(Coordinate coord in attackinfo.coordList)
+            {
+                Coordinate tmpCoord = Rotate(coord, GetAngle(directionToCoordinate));
+                GiveDamage(tmpCoord, attackinfo.damage,attackinfo.color);
+            }
         }
+    }
+    public void SubAttack()
+    {
+        foreach (AttackInfo attackinfo in mainAttackInfoList)
+        {
+            foreach (Coordinate coord in attackinfo.coordList)
+            {
+                Coordinate tmpCoord = Rotate(coord, GetAngle(directionToCoordinate));
+                GiveDamage(tmpCoord, attackinfo.damage,attackinfo.color);
+            }
+        }
+    }
+
+    public void MainSkill()
+    {
+    }
+    public void SubSkill()
+    {
+
     }
     
-    void AddTrace(Coordinate coordinate)
+    public bool GiveDamage(Coordinate coordinate, int damage,Color32 color)
     {
-        traceList.Insert(0, coordinate);
-        if(traceList.Count>10)
+        Tile targetTile = TileMapManager.GetTile(coordinate+this.coordinate);
+        if(targetTile!=null)
         {
-            Debug.Log(name + " " + coordinate + " " + traceList.Count);
-            traceList.RemoveAt(10);
-        }
-    }
-
-    public void Attack()
-    {
-        foreach(DamageInfo damage in damageInfo)
-        {
-            foreach(Coordinate coord in damage.area)
+            targetTile.DebugColorChange(color);
+            if (targetTile.unit!=null)
             {
-                GiveDamage(coord, damage.damage);
-            }
-        }
-    }
-    Coordinate Rotate(Coordinate coord, float degree)
-    {
-        float sin = Mathf.Sin(degree * Mathf.Deg2Rad);
-        float cos = Mathf.Cos(degree * Mathf.Deg2Rad);
-        
-
-        int tx = coord.x;
-        int ty = coord.y;
-
-        coord.x = (int)Math.Round((cos * tx) - (sin * ty));
-        coord.y = (int)Math.Round((sin * tx) + (cos * ty));
-        return coord;
-    }
-    public bool GiveDamage(Coordinate coordinate, int damage)
-    {
-        Tile attackPositionTile = TileMapManager.Instance.GetTile(coordinate);
-        if(attackPositionTile)
-        {
-            if(attackPositionTile.unit)
-            {
-                attackPositionTile.unit.GetDamage(damage);
+                targetTile.unit.GetDamage(damage);
                 return true;
             }
             else
@@ -210,59 +110,141 @@ public partial class Unit : MonoBehaviour
             Dead();
         }
     }
-    public void Dead()
-    {
-        //사망처리
-    }
-
-
-    void Start ()
-    {
-        Debug.Log(Rotate(new Coordinate(-1, 1), -90));
-    }
-
-    void Update ()
-    {
-	}
+    
 }
-[Serializable]
-public struct Coordinate
+public partial class Unit : MonoBehaviour
 {
-    public int x;
-    public int y;
-    public Coordinate(int x, int y)
+    Coordinate directionToCoordinate
     {
-        this.x = x;
-        this.y = y;
+        get
+        {
+            switch (direction)
+            {
+                case Direction.Up:
+                    return new Coordinate(0, 1);
+                case Direction.Left:
+                    return new Coordinate(-1, 0);
+                case Direction.Down:
+                    return new Coordinate(0, -1);
+                case Direction.Right:
+                    return new Coordinate(1, 0);
+                default:
+                    return new Coordinate(0, 0);
+            }
+        }
     }
-    public Coordinate(Coordinate coordinate)
+    [Serializable]
+    public class AttackInfo
     {
-        x = coordinate.x;
-        y = coordinate.y;
+        public List<Coordinate> coordList = new List<Coordinate>();
+        public int damage;
+        public Color32 color = new Color32();
     }
+    int GetAngle(Coordinate vEnd)
+    {
+        Coordinate v = vEnd - Coordinate.Zero;
 
-    public static Coordinate operator +(Coordinate a, Coordinate b)
-    {
-        return new Coordinate(a.x + b.x, a.y + b.y);
+        return (int)(Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg);
     }
-    public static Coordinate operator -(Coordinate a, Coordinate b)
+    public void Initialze()
     {
-        return new Coordinate(a.x - b.x, a.y - b.y);
+
     }
-    public static Coordinate operator -(Coordinate a)
+    Coordinate Rotate(Coordinate coord, float degree)
     {
-        return new Coordinate(-a.x, -a.y);
+        float sin = Mathf.Sin(degree * Mathf.Deg2Rad);
+        float cos = Mathf.Cos(degree * Mathf.Deg2Rad);
+
+
+        int tx = coord.x;
+        int ty = coord.y;
+
+        coord.x = (int)Math.Round((cos * tx) - (sin * ty));
+        coord.y = (int)Math.Round((sin * tx) + (cos * ty));
+        return coord;
     }
-    public static Coordinate operator *(Coordinate a, int b)
+    /*public bool MoveToDirection(Direction direction, int _movePoint)
     {
-        return new Coordinate(a.x * b, a.y * b);
+        TileMapManager tm = TileMapManager.Instance;
+        this.direction = direction;
+        Coordinate nextPosition;
+        switch (direction)
+        {
+            case Direction.Up:
+                nextPosition = new Coordinate(0, 1);
+                break;
+            case Direction.Left:
+                nextPosition = new Coordinate(-1, 0);
+                break;
+            case Direction.Down:
+                nextPosition = new Coordinate(0, -1);
+                break;
+            case Direction.Right:
+                nextPosition = new Coordinate(1, 0);
+                break;
+            default:
+                nextPosition = new Coordinate(0, 0);
+                break;
+        }
+        Coordinate resultPosition = coordinate;
+        Coordinate lastPosition = coordinate;
+
+        for (int point = 1; point <=movePoint; point++)
+        {
+            Tile t = TileMapManager.GetTile(nextPosition * point + coordinate);
+            if (t)
+            {
+                if (t.unit == null)
+                {
+                    lastPosition = resultPosition;
+                    resultPosition = nextPosition * point + coordinate;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        MoveToPosition(resultPosition);
+        AddTrace(lastPosition);
+        return true;
+
     }
-    public static Coordinate operator *(int a,Coordinate b)
+    public Coordinate coordDirection
     {
-        return new Coordinate(b.x * a, b.y * a);
+        get
+        {
+            Coordinate direction;
+            switch (this.direction)
+            {
+                case Direction.Up:
+                    direction = new Coordinate(0, 1);
+                    break;
+                case Direction.Left:
+                    direction = new Coordinate(-1, 0);
+                    break;
+                case Direction.Down:
+                    direction = new Coordinate(0, -1);
+                    break;
+                case Direction.Right:
+                    direction = new Coordinate(1, 0);
+                    break;
+                default:
+                    direction = new Coordinate(0, 0);
+                    break;
+            }
+            return direction;
+        }
     }
-    public override string ToString()
+    public Coordinate GetBackPosition
     {
-        return "("+x+ "," + y+")";
-    }
+        get
+        {
+            return coordinate - coordDirection;
+        }
+    }*/
 }
