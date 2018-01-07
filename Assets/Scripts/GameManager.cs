@@ -42,35 +42,19 @@ public class GameManager : MonoBehaviour
         playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Tanker")));
         playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Dealer")));
         playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Healer")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Dealer")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Healer")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Tanker")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Dealer")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Healer")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Tanker")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Dealer")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Healer")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Tanker")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Dealer")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Healer")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Tanker")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Dealer")));
-        playerUnitList.Add(Instantiate(Resources.Load<Unit>("Prefabs/Characters/Healer")));
-        int count = 0;
-        foreach (Unit unit in playerUnitList)
-        {
-            unit.coordinate=new Coordinate(count,count);
-            SetUnit(unit.coordinate, unit);
-            PartyManager.Instance.memberList.Add(unit);
-            count++;
-        }
+        playerUnitList[0].coordinate = new Coordinate(3, 3);
+        playerUnitList[1].coordinate = new Coordinate(1, 2);
+        playerUnitList[2].coordinate = new Coordinate(2, 1);
+        SetUnit(playerUnitList[0].coordinate, playerUnitList[0]);
+        SetUnit(playerUnitList[1].coordinate, playerUnitList[1]);
+        SetUnit(playerUnitList[2].coordinate, playerUnitList[2]);
         StartCoroutine(GameTick());
         leader = playerUnitList[0];
+
+
         PartyManager.Instance.leader = leader;
-        PartyManager.Instance.memberList.Remove(leader);
-
-
-
+        PartyManager.Instance.memberList.Add(playerUnitList[1]);
+        PartyManager.Instance.memberList.Add(playerUnitList[2]);
 
         //맵 생성.
         //몹 배치

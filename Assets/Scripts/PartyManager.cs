@@ -116,9 +116,9 @@ public partial class PartyManager : MonoBehaviour
     void AddTrace(TraceInfo position)
     {
         positionTrace.Insert(0, position);
-        if (positionTrace.Count > 50)
+        if (positionTrace.Count > 10)
         {
-            positionTrace.RemoveAt(50);
+            positionTrace.RemoveAt(10);
         }
     }
 }
