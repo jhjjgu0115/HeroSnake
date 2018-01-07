@@ -43,7 +43,6 @@ public partial class Unit : MonoBehaviour
         {
             if(targetTile.unit==null)
             {
-                Debug.Log(name + " 가 움직");
                 TileMapManager.GetTile(this.coordinate).unit = null;
                 transform.position = targetTile.transform.position;
                 targetTile.unit = this;

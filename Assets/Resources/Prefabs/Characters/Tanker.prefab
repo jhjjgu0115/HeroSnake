@@ -211,7 +211,7 @@ MonoBehaviour:
     x: 0
     y: 0
   direction: 0
-  movePoint: 2
+  movePoint: 1
 --- !u!114 &114889864191084120
 MonoBehaviour:
   m_ObjectHideFlags: 1
