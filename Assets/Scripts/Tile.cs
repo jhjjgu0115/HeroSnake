@@ -26,7 +26,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public EGround groundInfo=EGround.Ground;
+    public E_Ground groundInfo=E_Ground.Ground;
     public List<GameObject> interactableList = new List<GameObject>();
     List<Item> itemList = new List<Item>();
     public List<Item> ItemList
@@ -55,7 +55,7 @@ public class Tile : MonoBehaviour
         this.y = y;
     }
     [ContextMenu("SetGround")]
-    public void SetGroundInfo(EGround groundInfo)
+    public void SetGroundInfo(E_Ground groundInfo)
     {
         this.groundInfo = groundInfo;
         spriteRenderer.sprite = tileSprites.Find(i => i.name == groundInfo.ToString());

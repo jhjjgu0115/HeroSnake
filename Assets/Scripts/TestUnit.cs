@@ -5,13 +5,13 @@ using UnityEngine;
 public class TestUnit : MonoBehaviour
 {
     public Coordinate currentPosition;
-    public Direction currentDirection;
+    public E_Direction currentDirection;
 
     public void MoveToPosition(Coordinate movePosition)
     {
 
     }
-    public void MoveToDiretion(Direction direction, int movePoint)
+    public void MoveToDiretion(E_Direction direction, int movePoint)
     {
 
     }

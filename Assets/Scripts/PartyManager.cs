@@ -4,32 +4,46 @@ using UnityEngine;
 
 public partial class PartyManager : MonoBehaviour
 {
+    static PartyManager instance;
+    public static PartyManager Instance
+    {
+        get
+        {
+            if (!instance)
+            {
+                instance = FindObjectOfType<PartyManager>();
+                if (!instance)
+                {
+                    GameObject container = new GameObject();
+                    container.name = "PartyManager";
+                    instance = container.AddComponent<PartyManager>();
+                }
+            }
+            return instance;
+        }
+    }
     public Unit leader;
     public List<Unit> memberList = new List<Unit>();//리더가 0번이면
+    [SerializeField]
     List<TraceInfo> positionTrace = new List<TraceInfo>();
 
-    public void Move(Direction direction)
+    public void Move(E_Direction direction)
     {
-        /*
-         * 리더 이동
-         * 흔적 추가
-         * 아군 따라가기
-         */
         leader.direction = direction;
 
         Coordinate nextPosition;
         switch(direction)
         {
-            case Direction.Up:
+            case E_Direction.Up:
                 nextPosition = new Coordinate(0, 1);
                 break;
-            case Direction.Left:
+            case E_Direction.Left:
                 nextPosition = new Coordinate(-1, 0);
                 break;
-            case Direction.Down:
+            case E_Direction.Down:
                 nextPosition = new Coordinate(0, -1);
                 break;
-            case Direction.Right:
+            case E_Direction.Right:
                 nextPosition = new Coordinate(1, 0);
                 break;
             default:
@@ -44,9 +58,9 @@ public partial class PartyManager : MonoBehaviour
             if(t!=null)
             {
                 //이동 가능한지 확인구간
-                if(t.unit!=null)
+                if(t.unit==null)
                 {
-                    traceInfo = new TraceInfo(direction, leader.coordinate);
+                    traceInfo = new TraceInfo(direction, resultPosition);
                     resultPosition = nextPosition * point + leader.coordinate;
                     AddTrace(traceInfo);
                 }
@@ -62,30 +76,38 @@ public partial class PartyManager : MonoBehaviour
         }
         leader.MoveToPosition(resultPosition);
 
-        for(int index=0; index < memberList.Count; index++)
+        for (int index=0; index < memberList.Count; index++)
         {
-            memberList[index].MoveToPosition(positionTrace[index].coordinate);
-            memberList[index].direction = positionTrace[index].direction;
+            if(positionTrace.Count-1>=index)
+            {
+                memberList[index].MoveToPosition(positionTrace[index].coordinate);
+                memberList[index].direction = positionTrace[index].direction;
+            }
+            else
+            {
+                break;
+            }
         }
         //문제 발생 가능함. 리더의 밀쳐지기 혹은 급작스런 이동시.
     }
-    public void Attack()
+    public void PartyAct()
     {
-        leader.MainAttack();
+        leader.Act(E_ActionList.MainSkill);
         foreach(Unit member in memberList)
         {
-            member.SubAttack();
+            member.Act(E_ActionList.SubSkill);
         }
     }
     
 }
 public partial class PartyManager : MonoBehaviour
 {
+    [System.Serializable]
     struct TraceInfo
     {
-        public Direction direction;
+        public E_Direction direction;
         public Coordinate coordinate;
-        public TraceInfo(Direction dir, Coordinate coord)
+        public TraceInfo(E_Direction dir, Coordinate coord)
         {
             direction = dir;
             coordinate = coord;

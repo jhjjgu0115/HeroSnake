@@ -14,7 +14,6 @@ public class TabButton : MonoBehaviour
     public TabManager parentManager;
     public Sprite selectedImage;
     public Sprite noneSelectedImage;
-    public Vector2 changedAnchor = new Vector2();
 
     public void Clicked()
     {
