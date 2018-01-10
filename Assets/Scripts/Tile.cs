@@ -27,7 +27,7 @@ public class Tile : MonoBehaviour
     }
 
     public E_Ground groundInfo=E_Ground.Ground;
-    public List<GameObject> objectContainer = new List<GameObject>();
+    public List<object> objectContainer = new List<object>();
     public Unit unit;
 
     void Awake()

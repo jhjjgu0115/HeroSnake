@@ -73,6 +73,8 @@ public partial class Unit : MonoBehaviour
     }
     public void Dead()
     {
+        TileMapManager.GetTile(coordinate).unit = null;
+        
         Destroy(gameObject);
     }
     public event UnitEvent BirthEvent;
